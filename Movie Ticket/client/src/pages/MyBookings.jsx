@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import Loading from "../components/Loading";
+import BlurCircle from "../components/BlurCircle";
+import { dummyBookingData } from "../assets/assets";
+
+
 
 const MyBookings = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-}
+  const currency = import.meta.env.VITE_CURRENCY;
+
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getMyBookings = async () => {
+    setBookings(dummyBookingData);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getMyBookings();
+  }, []);
+
+  return Loading ? (
+    <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
+      <BlurCircle top="100px" left="100px" />
+      <div>
+        <BlurCircle bottom="0px" left="600px" />
+      </div>
+      <h1 className="text-lg font-semibold mb-4">My Bookings</h1>
+    </div>
+  ) : (
+    <Loading />
+  );
+};
 
 export default MyBookings;
